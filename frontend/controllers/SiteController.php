@@ -1,7 +1,8 @@
 <?php
 namespace frontend\controllers;
 
-use frontend\models\User;
+use common\models\RewardCode;
+use frontend\models\Wallet;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -13,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\User;
 
 /**
  * Site controller
@@ -27,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup','active'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,6 +38,11 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['active'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,7 +80,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = new User();
+        $model = new RewardCode();
         return $this->render('index',['model' => $model,]);
     }
 
@@ -153,8 +160,16 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
+                //自动开通钱包功能-----start-----
+                $wallet_model = new Wallet();
+                $wallet_model->user_id = $user->getId();
+                $wallet_model->username = $user->username;
+               // $wallet_model->usermoeny = 0;
+                $wallet_model->save();
+                //----- end-----
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
@@ -213,5 +228,53 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function  actionActive(){
+        $RewardCode_model = new RewardCode();
+
+        if ($RewardCode_model->load(Yii::$app->request->post())) {
+             $content = $RewardCode_model->content;
+            if(!empty($content)){
+               $RewardCode_one = RewardCode::find()->where(['content'=>$content])->one();
+               if(!empty($RewardCode_one)){
+
+                   if($RewardCode_one->user_id == 0){
+                      $user_id = Yii::$app->user->identity->getId();
+                      $RewardCode_one->user_id = $user_id;
+
+                      $wallet_model_one = Wallet::find()->where(['user_id'=>$user_id])->one();
+                      $money = $wallet_model_one->usermoney;
+                      $wallet_model_one->usermoney = $money+$RewardCode_one->money;
+                      $wallet_model_one->save();
+                      $RewardCode_one->save();
+                       return $this->render('index',[
+                           'model'=>$RewardCode_model,
+                           'message'=>'激活成功!',
+                       ]);
+
+                   }
+
+                   return $this->render('index',[
+                       'model'=>$RewardCode_model,
+                       'message'=>'激活失败，该奖励码已被激活!',
+                   ]);
+
+               }
+                return $this->render('index',[
+                    'model'=>$RewardCode_model,
+                    'message'=>'激活失败，请核对奖励是否输入正确！',
+                ]);
+
+             }
+
+
+        }
+
+        return $this->render('index',[
+            'model'=>$RewardCode_model,
+            'message'=>'',
+        ]);
+
     }
 }

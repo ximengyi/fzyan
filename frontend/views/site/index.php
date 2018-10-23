@@ -21,16 +21,22 @@ $this->title = 'My Yii Application';
 
         <p class="lead"></p>
         <div class="col-lg-10">
-            <?php $form = ActiveForm::begin(['id' => 'form-search']); ?>
+            <?php $form = ActiveForm::begin(['action'=>['site/active'] , 'method'=>'post','id' => 'form-activation']); ?>
 
-            <?= $form->field($model, 'username',['labelOptions' => ['label' => '']])->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'content',['labelOptions' => ['label' => '']])->textInput(['autofocus' => true]) ?>
+            <?= Html::submitButton('确认激活', ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
 
             <?php ActiveForm::end(); ?>
         </div>
+        <br>
+<!--        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">确认激活</a></p>-->
+        <div>
+            <p><span style="color:red;"><?=$message ?? ''  ?></span></p>
 
+        </div>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">确认激活</a></p>
     </div>
+
 
 
 
