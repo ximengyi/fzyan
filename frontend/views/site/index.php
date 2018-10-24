@@ -20,14 +20,14 @@ $this->title = 'My Yii Application';
         <h4>请输入您的激活码来激活奖励！</h4>
 
         <p class="lead"></p>
-        <div class="col-lg-10">
+<!--        <div class="col-lg-10">-->
             <?php $form = ActiveForm::begin(['action'=>['site/active'] , 'method'=>'post','id' => 'form-activation']); ?>
 
-            <?= $form->field($model, 'content',['labelOptions' => ['label' => '']])->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'content',['options'=>['class'=>'col-lg-10'],'labelOptions' => ['label' => '']])->textInput(['autofocus' => true]) ?>
             <?= Html::submitButton('确认激活', ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
 
             <?php ActiveForm::end(); ?>
-        </div>
+<!--       </div>-->
         <br>
 <!--        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">确认激活</a></p>-->
         <div>
