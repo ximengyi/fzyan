@@ -29,7 +29,7 @@ class Device extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'address'], 'required'],
+            [['name', 'address','price'], 'required'],
             [['price'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['address'], 'string', 'max' => 255],

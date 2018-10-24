@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Device;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -27,7 +28,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','device'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -125,5 +126,21 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionDevice()
+    {
+        $model = new Device();
+        if($model->load(Yii::$app->request->post())){
+            if($model->save()){
+                return $this->goHome();
+            }
+
+        }
+        return $this->render('device',
+        [
+        'model' => $model,
+        ]);
+    }
+
 }
 

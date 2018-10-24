@@ -37,7 +37,6 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => Yii::t('common','Home'), 'url' => ['/site/index']],
-        ['label' => Yii::t('common','Wallet'), 'url' => ['/site/contact']],
         ['label' => Yii::t('common','About'), 'url' => ['/site/about']],
 
     ];
@@ -45,6 +44,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => Yii::t('common','Signup'), 'url' => ['/site/signup']];
         $menuItems[] = ['label' =>  Yii::t('common','Login'), 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => Yii::t('common','Wallet'), 'url' => ['/site/contact']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
