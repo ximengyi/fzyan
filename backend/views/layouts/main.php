@@ -42,7 +42,7 @@ AppAsset::register($this);
 
     } else {
         $menuItems[] = ['label' => '首页', 'url' => ['/site/index']];
-        $menuItems[] = ['label' => '设备信息', 'url' => ['/device/index']];
+        $menuItems[] = ['label' => '设备管理', 'url' => ['/device/index']];
         $menuItems[] = ['label' => '添加设备', 'url' => ['/site/device']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

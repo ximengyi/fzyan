@@ -2,34 +2,34 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Progress;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\DeviceSearch */
+/* @var $searchModel frontend\models\DeviceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '设备信息';
+$this->title = 'Devices';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+<?= Progress::widget(['percent' => 90, 'label' => '60%']) ?>
+<hr>
+
 <div class="device-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('新增设备', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Device', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-           // ['class' => 'yii\grid\SerialColumn'],
-           //
-           //
-           //  ['label'=>'编号','value'=>'name'],
-           //  ['label'=>'设备地址','value'=>'address'],
-           //  ['label'=>'状态','value'=>'state'],
-           //  ['label'=>'回收价格','value'=>'price'],
+            ['class' => 'yii\grid\SerialColumn'],
+
             'id',
             'name',
             'address',
