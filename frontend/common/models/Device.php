@@ -45,10 +45,10 @@ class Device extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'address' => 'Address',
-            'state' => 'State',
-            'price' => 'Price',
+            'name' => '编号',
+            'address' => '地址',
+            'state' => '满溢状态',
+            'price' => '价格',
         ];
     }
 }

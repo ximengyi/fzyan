@@ -9,6 +9,6 @@ return [
     'Username'=>'用户名',
     'Password'=>'密码',
     'Wallet'=>'我的钱包',
-    'Device'=>'首页',
+    'Device'=>'设备搜索',
 
 ];

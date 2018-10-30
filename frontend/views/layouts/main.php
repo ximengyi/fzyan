@@ -16,15 +16,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../bootstrap/bootstrap-2.0.3.css" rel="stylesheet">
-    <link href="/try/bootstrap/twitter-bootstrap-v2/docs/assets/css/example-fixed-layout.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/try/bootstrap/twitter-bootstrap-v2/docs/examples/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/try/bootstrap/twitter-bootstrap-v2/docs/examples/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/try/bootstrap/twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/try/bootstrap/twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-114x114.png">
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -42,8 +34,9 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => Yii::t('common','Device'), 'url' => ['/device/index']],
+
         ['label' => Yii::t('common','Home'), 'url' => ['/site/index']],
+        ['label' => Yii::t('common','Device'), 'url' => ['/device/index']],
         ['label' => Yii::t('common','About'), 'url' => ['/site/about']],
 
     ];

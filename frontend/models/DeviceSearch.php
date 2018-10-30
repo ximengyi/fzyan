@@ -41,6 +41,7 @@ class DeviceSearch extends Device
      */
     public function search($params)
     {
+
         $query = Device::find();
 
         // add conditions that should always apply here
