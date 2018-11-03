@@ -234,6 +234,7 @@ class SiteController extends Controller
                    if($RewardCode_one->user_id == 0){
                       $user_id = Yii::$app->user->identity->getId();
                       $RewardCode_one->user_id = $user_id;
+                      $RewardCode_one->actived_at = time();
 
                       $wallet_model_one = Wallet::find()->where(['user_id'=>$user_id])->one();
                       $money = $wallet_model_one->usermoney;

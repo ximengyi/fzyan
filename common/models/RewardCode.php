@@ -12,6 +12,8 @@ use Yii;
  * @property string $money 奖励金额
  * @property string $trash_id 回收装置序号
  * @property string $user_id 用户id
+ * @property int $created_at 创建时间
+ * @property int $actived_at 激活时间
  */
 class RewardCode extends \yii\db\ActiveRecord
 {
@@ -29,7 +31,7 @@ class RewardCode extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['money', 'trash_id', 'user_id'], 'integer'],
+            [['money', 'trash_id', 'user_id', 'created_at', 'actived_at'], 'integer'],
             [['content'], 'string', 'max' => 255],
         ];
     }
@@ -45,6 +47,8 @@ class RewardCode extends \yii\db\ActiveRecord
             'money' => 'Money',
             'trash_id' => 'Trash ID',
             'user_id' => 'User ID',
+            'created_at' => 'Created At',
+            'actived_at' => 'Actived At',
         ];
     }
 }
