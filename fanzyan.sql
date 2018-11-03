@@ -49,10 +49,15 @@ CREATE TABLE IF NOT EXISTS `device` (
   `price` int(11) DEFAULT NULL COMMENT '回收价格',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- 正在导出表  fzyan.device 的数据：0 rows
+-- 正在导出表  fzyan.device 的数据：4 rows
 /*!40000 ALTER TABLE `device` DISABLE KEYS */;
+INSERT INTO `device` (`id`, `name`, `address`, `state`, `price`) VALUES
+	(1, '001', '上海市杨浦区长江路256号', 0, 12),
+	(2, '002', '长宁区古北路388号', 0, 12),
+	(3, '003', '上海市新天地马当路388号', 60, 15),
+	(4, '004', '上海市嘉兴区200号', 30, 13);
 /*!40000 ALTER TABLE `device` ENABLE KEYS */;
 
 -- 导出  表 fzyan.migration 结构
@@ -76,14 +81,16 @@ CREATE TABLE IF NOT EXISTS `reward_code` (
   `money` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '奖励金额',
   `trash_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '回收装置序号',
   `user_id` int(10) unsigned DEFAULT '0' COMMENT '用户id',
+  `created_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `actived_at` int(11) DEFAULT NULL COMMENT '激活时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  fzyan.reward_code 的数据：2 rows
 /*!40000 ALTER TABLE `reward_code` DISABLE KEYS */;
-INSERT INTO `reward_code` (`id`, `content`, `money`, `trash_id`, `user_id`) VALUES
-	(1, 'qd213', 20, 1, 5),
-	(2, 'we321', 12, 2, 4);
+INSERT INTO `reward_code` (`id`, `content`, `money`, `trash_id`, `user_id`, `created_at`, `actived_at`) VALUES
+	(1, 'qd213', 20, 1, 5, NULL, NULL),
+	(2, 'we321', 12, 2, 4, NULL, NULL);
 /*!40000 ALTER TABLE `reward_code` ENABLE KEYS */;
 
 -- 导出  表 fzyan.user 结构
