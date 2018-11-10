@@ -51,4 +51,18 @@ class Device extends \yii\db\ActiveRecord
             'price' => 'Price',
         ];
     }
+
+    public function fields()
+    {
+
+        return [
+
+            'id',
+            'name',
+            'price',
+
+        ];
+
+    }
+
 }
