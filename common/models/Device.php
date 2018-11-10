@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\db\Transaction;
 use Yii;
 
 /**
@@ -64,5 +65,6 @@ class Device extends \yii\db\ActiveRecord
         ];
 
     }
+
 
 }

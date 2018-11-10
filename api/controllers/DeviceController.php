@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use common\models\Device;
+use common\models\RewardCode;
 use yii\rest\ActiveController;
 
 
@@ -16,11 +17,28 @@ class DeviceController extends ActiveController
 
     public function actionSearch()
     {
-        $test = $_GET['test'];
+        $name =  $_GET['name'] ?? '';
+        $weight =  $_GET['weight'] ?? '';
+        $state  = $_GET['state'] ?? '';
+        $device_one = Device::find()->where(['=','name',$name])->one();
+        if(!empty($device_one)){
+            $device_new_one = new Device();
+            $device_new_one->id = $device_one->id;
+            $device_new_one->state = $state;
+            $reward_code = new RewardCode();
+            $reward_code->content = uniqid();
+            $reward_code->money = $weight * $device_one->price;
+            $reward_code->trash_id = $device_one->id;
+            $reward_code->created_at = time();
 
-        $name =  $_GET['name'];
-        return [$test,$name];
+            if($reward_code->create_code($reward_code,$device_new_one)){
 
-        return Device::find()->where(['=','name',$name])->one();
+                return ['status'=>200,'code'=>$reward_code->content,'money'=>$reward_code->money];
+
+            }
+        }
+
+      return  ['status'=>500,'message'=>'failed'];
+
     }
 }

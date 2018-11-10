@@ -51,4 +51,25 @@ class RewardCode extends \yii\db\ActiveRecord
             'actived_at' => 'Actived At',
         ];
     }
+
+
+    public function create_code($reward_code,$device_new_one)
+    {
+
+        $transaction =Yii::$app->db->beginTransaction();//开启
+        try {
+
+            $reward_code->save();
+            $device_new_one->save();
+            $transaction->commit();//提交
+
+        }
+        catch (Exception $e)
+        {
+            $transaction->rollBack();//回滚
+            return false;
+        }
+
+        return true;
+    }
 }
