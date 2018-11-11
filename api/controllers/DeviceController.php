@@ -5,6 +5,7 @@ namespace api\controllers;
 use common\models\Device;
 use common\models\RewardCode;
 use yii\rest\ActiveController;
+use YII;
 
 
 
@@ -17,9 +18,11 @@ class DeviceController extends ActiveController
 
     public function actionSearch()
     {
-        $name =  $_GET['name'] ?? '';
-        $weight =  $_GET['weight'] ?? '';
-        $state  = $_GET['state'] ?? '';
+
+        $name =  Yii::$app->request->get('name');
+        $weight =  Yii::$app->request->get('weight');
+        $state  = Yii::$app->request->get('state');
+        
         $device_one = Device::find()->where(['=','name',$name])->one();
 
         $device_one->state = $state;
