@@ -21,17 +21,16 @@ class DeviceController extends ActiveController
         $weight =  $_GET['weight'] ?? '';
         $state  = $_GET['state'] ?? '';
         $device_one = Device::find()->where(['=','name',$name])->one();
+
+        $device_one->state = $state;
         if(!empty($device_one)){
-            $device_new_one = new Device();
-            $device_new_one->id = $device_one->id;
-            $device_new_one->state = $state;
             $reward_code = new RewardCode();
             $reward_code->content = uniqid();
             $reward_code->money = $weight * $device_one->price;
             $reward_code->trash_id = $device_one->id;
             $reward_code->created_at = time();
 
-            if($reward_code->create_code($reward_code,$device_new_one)){
+            if($reward_code->create_code($reward_code,$device_one)){
 
                 return ['status'=>200,'code'=>$reward_code->content,'money'=>$reward_code->money];
 
