@@ -15,13 +15,19 @@ use YII;
 class DeviceController extends ActiveController
 {
     public $modelClass = 'common\models\Device';
-    public $capacity = 90;
+    public $capacity = 66;
 
     public function actionSearch()
     {
         $name =  Yii::$app->request->get('name');
         $weight =  Yii::$app->request->get('weight');
         $state  = Yii::$app->request->get('state');
+
+        if($state>70 || $weight>3000){
+
+            return  ['status'=>500,'message'=>"检测到的数据异常，请重试！"];
+
+        }
 
         $device_one = Device::find()->where(['=','name',$name])->one();
 
@@ -41,7 +47,7 @@ class DeviceController extends ActiveController
             }
         }
 
-      return  ['status'=>500,'message'=>'failed'];
+      return  ['status'=>500,'message'=>"failed"];
 
     }
 }
