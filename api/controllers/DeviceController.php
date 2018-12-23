@@ -5,6 +5,8 @@ namespace api\controllers;
 use common\models\Device;
 use common\models\RewardCode;
 use yii\rest\ActiveController;
+use yii\web\Response;
+use yii\filters\ContentNegotiator;
 use YII;
 
 
@@ -14,8 +16,49 @@ use YII;
  */
 class DeviceController extends ActiveController
 {
+
+
     public $modelClass = 'common\models\Device';
     public $capacity = 66;
+
+
+
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        unset($behaviors['authenticator']);
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
+            'cors' => [
+                // restrict access to
+                'Access-Control-Request-Method' => ['*'],
+                // Allow only POST and PUT methods
+                'Access-Control-Request-Headers' => ['*'],
+                // Allow only headers 'X-Wsse'
+                'Access-Control-Allow-Credentials' => true,
+                // Allow OPTIONS caching
+                'Access-Control-Max-Age' => 3600,
+                // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+            ],
+        ];
+
+        $behaviors['contentNegotiator'] = [
+            'class' => ContentNegotiator::className(),
+            'formats' => [
+                'application/json' => Response::FORMAT_JSON
+            ]
+        ];
+        return $behaviors;
+    }
+
+
+
+
+
+
 
     public function actionSearch()
     {
@@ -25,7 +68,7 @@ class DeviceController extends ActiveController
 
         if($state>70 || $weight>3000){
 
-            return  ['status'=>500,'message'=>"检测到的数据异常，请重试！"];
+            return  ['status'=>500,'message'=>"检测到的数据异常，请重试！","state"=>$state,"weight"=>$weight];
 
         }
 
